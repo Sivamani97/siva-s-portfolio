@@ -920,4 +920,23 @@ span {
         font-size: 4rem; /* Adjusted for better mobile display */
     }
 
+
+} 
+.header.scrolled {
+    background-color: #2e303c; /* A solid color for contrast */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Add a top padding to the body to prevent content from being hidden behind the fixed header */
+body {
+    padding-top: 100px; /* Adjust this value to be slightly more than the header's height */
+}
+
+/* You may need to adjust your existing .navbar and .logo styles for proper alignment with the new fixed position */
+.navbar a {
+    /* Your existing styles for navbar links */
+    transition: color 0.3s ease;
+}
+.navbar a:hover {
+    color: #00bcd4; /* Example hover color */
 }

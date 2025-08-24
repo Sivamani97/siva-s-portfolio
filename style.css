@@ -890,6 +890,9 @@ span {
     #menu-icon {
         display: block;
     }
+    .logo {
+        font-size: 2rem;
+        margin-left: 2rem;}
 
     .navbar {
         position: absolute;
@@ -983,3 +986,4 @@ span {
         font-size: 1.4rem;
     }
 }
+

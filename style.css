@@ -1,7 +1,7 @@
+/* FONT IMPORTS */
 @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
-html {
-    scroll-behavior: smooth;
-}
+
+/* GLOBAL STYLES & VARIABLES */
 * {
     margin: 0;
     padding: 0;
@@ -23,16 +23,20 @@ html {
 html {
     font-size: 60%;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
     background: var(--bg-color);
     color: var(--text-color);
+    padding-top: 100px; /* Prevents content from being hidden behind the fixed header */
 }
 
+/* HEADER & NAVIGATION */
 .header {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     padding: 4rem 12% 4rem;
     background: rgba(0, 0, 0, 0.3);
@@ -41,8 +45,14 @@ body {
     justify-content: space-between;
     align-items: center;
     z-index: 5;
-    position: relative;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
+
+.header.scrolled {
+    background-color: #2e303c;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 .logo {
     font-size: 3rem;
     color: var(--text-color);
@@ -60,19 +70,33 @@ body {
 }
 
 .navbar a {
+    position: relative;
     font-size: 1.8rem;
     color: var(--text-color);
     margin-left: 4rem;
     font-weight: 500;
-    transition: 0.3s ease;
-    border-bottom: 3px solid transparent;
+    transition: color 0.3s ease;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 3px;
+    background-color: var(--main-color);
+    transition: width 0.3s ease;
 }
 
 .navbar a:hover,
 .navbar a.active {
-    transform: scaleX(1);
     color: var(--main-color);
-    border-bottom: 3px solid var(--main-color);
+}
+
+.navbar a:hover::after,
+.navbar a.active::after {
+    width: 100%;
 }
 
 #menu-icon {
@@ -91,6 +115,7 @@ section {
     scroll-margin-top: 100px;
 }
 
+/* HOME SECTION */
 .home {
     display: flex;
     align-items: center;
@@ -305,14 +330,15 @@ span {
     text-align: center;
     margin: 5rem 0;
 }
-
 .education {
     padding: 100px 15px;
     background-color: var(--second-bg-color);
 }
 
 .education h2 {
+    text-align: center;
     margin-bottom: 5rem;
+    color: var(--main-color);
 }
 
 .timeline-items {
@@ -329,7 +355,7 @@ span {
     width: 5px;
     height: 100%;
     background-color: var(--main-color);
-    left: calc(50% - 1px);
+    left: calc(50% - 2.5px); /* Adjusted for a perfect center */
 }
 
 .timeline-item {
@@ -338,7 +364,7 @@ span {
     position: relative;
 }
 
-.timeline-item::last-child {
+.timeline-item:last-child {
     margin-bottom: 0;
 }
 
@@ -357,14 +383,14 @@ span {
     background-color: var(--main-color);
     box-shadow: 0 0 25px var(--main-color), 0 0 50px var(--main-color);
     position: absolute;
-    left: calc(50% - 8px);
+    left: calc(50% - 10.5px); /* Adjusted for perfect dot alignment */
     border-radius: 50%;
     top: 10px;
 }
 
 .timeline-date {
     font-size: 20px;
-    font-weight: 100px;
+    font-weight: 100;
     color: white;
     margin: 6px 0 15px;
 }
@@ -396,60 +422,74 @@ span {
     font-size: 16px;
     font-weight: 300;
     line-height: 22px;
+    text-align: justify; /* Ensure consistency with your other sections */
 }
 
-::-webkit-scrollbar {
-    width: 10px;
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .timeline-items {
+        padding: 0;
+    }
+    
+    .timeline-items::before {
+        left: 7px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 30px;
+        padding-right: 0;
+    }
+
+    .timeline-item:nth-child(even) {
+        padding-left: 30px;
+    }
+    
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        text-align: left;
+    }
+
+    .timeline-dot {
+        left: 0;
+    }
 }
 
-::-webkit-scrollbar-thumb {
-    background: var(--main-color);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color);
-}
-
-::-webkit-scrollbar-track {
+/* PROJECTS SECTION */
+.projects {
+    padding: 100px 15px;
     background: var(--second-bg-color);
 }
 
-.projects {
-    padding: 100px 15px;
-    background: var(--bg-color);
-    color: white;
-}
-
 .projects h2 {
+    text-align: center;
     margin-bottom: 5rem;
-    color: white;
+    color: var(--main-color);
 }
 
 .projects-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2.5rem;
+    align-items: stretch;
 }
 
 .projects-box {
     background-color: #1a1a1a;
-    height: 300px;
     border-radius: 3rem;
     border: 3px solid var(--main-color);
     cursor: pointer;
     transition: all 0.5s ease-in-out;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    flex-direction: column;
     padding: 2rem;
+    height: 100%;
     box-shadow: 0 0 20px rgba(var(--main-color-rgb), 0.5);
 }
 
 .projects-box:hover {
-    background: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
+    background: #000;
+    color: #fff;
     border: 5px solid var(--main-color);
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 0 15px var(--main-color),
@@ -458,34 +498,63 @@ span {
         0 0 80px rgba(var(--main-color-rgb), 0.3);
 }
 
-.projects h4 {
-    font-size: 30px;
-    color: white;
-}
 .projects-info {
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    text-align: left;
-    padding: 0;
+    justify-content: space-between;
+    height: 100%;
 }
 
-.projects-info h3 {
+.projects-info h4 {
     font-size: 3rem;
-    font-weight: 800;
-    line-height: 2;
+    color: var(--main-color);
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 .projects-info p {
-    text-indent: 2em;
     font-size: 1.6rem;
     font-weight: 600;
     line-height: 1.7;
     text-align: justify;
+    margin-bottom: 2rem;
 }
 
+.projects-info .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.live-demo-btn,
+.github-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    width: 15rem; /* Correct, unified desktop width */
+    background: transparent;
+    color: var(--main-color);
+    border: 3px solid var(--main-color);
+    border-radius: 4rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    transition: 0.5s ease;
+    box-shadow: 0 0 10px rgba(var(--main-color-rgb), 0.5);
+}
+
+.live-demo-btn:hover,
+.github-btn:hover {
+    background: var(--main-color);
+    color: var(--second-bg-color);
+    box-shadow: 0 0 20px rgba(var(--main-color-rgb), 0.9);
+}
+
+/* TESTIMONIALS SECTION */
 .testimonials {
     background: var(--second-bg-color);
     padding: 100px 15px;
@@ -538,7 +607,6 @@ span {
 }
 
 .testimonial-item:hover {
-    border: 3px solid var(--main-color);
     transform: translateY(-10px) scale(1.03);
     box-shadow: 0 0 50px var(--main-color);
 }
@@ -563,6 +631,7 @@ span {
     font-size: 2rem;
 }
 
+/* CONTACT SECTION */
 .contact {
     background-color: var(--bg-color);
 }
@@ -604,6 +673,7 @@ span {
     margin-top: 2rem;
 }
 
+/* FOOTER */
 .footer {
     position: relative;
     bottom: 0;
@@ -657,6 +727,7 @@ span {
 .footer ul li a:hover {
     border-bottom: 3px solid var(--main-color);
 }
+
 .footer ul li {
     display: inline-block;
     padding: 0 15px;
@@ -669,7 +740,7 @@ span {
     color: white;
 }
 
-/* Achievements Navigation Buttons */
+/* ACHIEVEMENTS & CERTIFICATES */
 .achievement-nav {
     display: flex;
     justify-content: center;
@@ -712,16 +783,16 @@ span {
     box-shadow: 0 0 50px var(--main-color);
 }
 
-/* Certificates / Internships Container */
+/* This is the final, consolidated version for all certificate/internship pages */
 .certificates-container {
     max-width: 1200px;
     margin: 5rem auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 3rem;
+    justify-items: center;
 }
 
-/* Individual Certificate / Internship Card */
 .certificate-card {
     background: var(--bg-color);
     border: 3px solid var(--main-color);
@@ -734,11 +805,11 @@ span {
 }
 
 .certificate-card img {
-    width: 100%;
+    width: 300px;
     height: 200px;
     object-fit: cover;
-    border-radius: 2rem;
-    margin-bottom: 1.5rem;
+    border-radius: 1.5rem;
+    margin-bottom: 1.5rem; 
 }
 
 .certificate-card p {
@@ -752,59 +823,25 @@ span {
     box-shadow: 0 0 50px var(--main-color);
 }
 
-.certificates-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    justify-items: center;
-    padding: 20px;
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-.certificate-card {
-    text-align: center;
-    background: #000000;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+::-webkit-scrollbar-thumb {
+    background: var(--main-color);
+    border-radius: 5px;
 }
 
-.certificate-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    cursor: pointer;
-    object-fit: contain;
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-color);
 }
 
-.navbar a {
-    position: relative;
-    font-size: 1.8rem;
-    color: var(--text-color);
-    margin-left: 4rem;
-    font-weight: 500;
-    transition: color 0.3s ease;
+::-webkit-scrollbar-track {
+    background: var(--second-bg-color);
 }
 
-.navbar a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 0;
-    height: 3px;
-    background-color: var(--main-color);
-    transition: width 0.3s ease;
-}
-
-.navbar a:hover::after,
-.navbar a.active::after {
-    width: 100%;
-}
-
-/*
-    Consolidated and cleaned-up media queries.
-    This replaces all of the previous, conflicting media query blocks.
-*/
+/* --- MEDIA QUERIES (FOR RESPONSIVENESS) --- */
 @media (max-width: 1285px) {
     html {
         font-size: 55%;
@@ -849,11 +886,11 @@ span {
         padding: 2rem 3%;
     }
 }
-
 @media (max-width: 895px) {
     #menu-icon {
         display: block;
     }
+
     .navbar {
         position: absolute;
         top: 100%;
@@ -865,43 +902,58 @@ span {
         border-bottom-left-radius: 2rem;
         border-left: 2px solid var(--main-color);
         border-bottom: 2px solid var(--main-color);
-        display: none;
+        /* These new properties enable the animation */
+        transform: translateX(100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out, visibility 0.4s;
     }
+
+    /* This class is added by your JavaScript to trigger the animation */
     .navbar.active {
-        display: block;
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
     }
+
     .navbar a {
         display: block;
         font-size: 2rem;
         margin: 3rem 0;
         color: white;
     }
-    .home {
+
+   .home {
         flex-direction: column-reverse;
-        margin: 5rem 4rem;
+        margin: 10rem 4rem; /* Changed top and bottom margin from 5rem to 10rem */
     }
+
     .home-content h3 {
         font-size: 2.6rem;
     }
+
     .home-content h1 {
         font-size: 5rem;
         margin-top: 3rem;
     }
+
     .home-content p {
         max-width: 600px;
         margin: 0 auto;
     }
+
     .home-img img {
         width: 56vw;
     }
+
     .projects h2 {
         margin-bottom: 3rem;
     }
+
     .projects-container {
         grid-template-columns: repeat(1, 1fr);
     }
 }
-
 @media (max-width: 768px) {
     .certificates-container {
         grid-template-columns: 1fr;
@@ -910,48 +962,24 @@ span {
         width: 90%;
     }
     .heading {
-        font-size: 1.8rem;
+        font-size: 4rem;
     }
-        .projects-info p {
-        font-size: 1.2rem; /* Reduced font size for mobile screens */
+    .projects-info p {
+        font-size: 1.2rem;
     }
-    
     .projects h2 {
-        font-size: 4rem; /* Adjusted for better mobile display */
+        font-size: 4rem;
     }
-
-}
-/* Add this to your style.css file */
-
-/* Ensure the header is fixed and styled for scrolling */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 2rem 5%; /* Adjust padding as needed */
-    z-index: 1000; /* Ensures it's always on top of other content */
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent initial state */
-    backdrop-filter: blur(10px); /* For a frosted glass effect */
-    transition: background-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-/* Add a class to change the header style on scroll (handled by JS) */
-.header.scrolled {
-    background-color: #2e303c; /* A solid color for contrast */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Add a top padding to the body to prevent content from being hidden behind the fixed header */
-body {
-    padding-top: 100px; /* Adjust this value to be slightly more than the header's height */
-}
-
-/* You may need to adjust your existing .navbar and .logo styles for proper alignment with the new fixed position */
-.navbar a {
-    /* Your existing styles for navbar links */
-    transition: color 0.3s ease;
-}
-.navbar a:hover {
-    color: #00bcd4; /* Example hover color */
+    /* Mobile-specific button and text styles */
+    .projects-info .button-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .live-demo-btn,
+    .github-btn {
+        width: 100%;
+        max-width: 25rem;
+        padding: 0.8rem 1.6rem;
+        font-size: 1.4rem;
+    }
 }
